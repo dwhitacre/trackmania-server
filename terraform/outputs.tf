@@ -6,10 +6,6 @@ output "tm_servers_public" {
   value = digitalocean_droplet.server.*.ipv4_address
 }
 
-output "bastion_public" {
-  value = digitalocean_droplet.bastion.ipv4_address
-}
-
 output "database_port" {
   value = digitalocean_database_cluster.mysql-cluster.port
 }

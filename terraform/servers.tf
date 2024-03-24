@@ -100,4 +100,11 @@ resource "digitalocean_firewall" "server" {
     protocol = "udp"
     port_range = "2350"
   }
+
+  # ssh
+  inbound_rule {
+    protocol = "tcp"
+    port_range = "22"
+    source_addresses = [var.do_ssh_ip]
+  }
 }

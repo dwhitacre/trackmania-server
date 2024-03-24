@@ -1,6 +1,7 @@
 # required
 variable "do_token" {}
 variable "do_ssh_pubkey" {}
+variable "do_ssh_ip" {}
 
 variable "name" {
   type = string
@@ -28,16 +29,6 @@ variable "droplet_image" {
   default = "docker-20-04"
 }
 
-variable "bastion_size" {
-  type = string
-  default = "s-1vcpu-1gb"
-}
-
-variable "bastion_image" {
-  type = string
-  default = "ubuntu-22-04-x64"
-}
-
 variable "database_count" {
   type = number
   default = 1
@@ -47,4 +38,3 @@ variable "database_size" {
   type = string
   default = "db-s-1vcpu-1gb"
 }
-
