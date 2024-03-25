@@ -8,16 +8,25 @@ resource "digitalocean_droplet" "server" {
   vpc_uuid = digitalocean_vpc.server.id
   tags = ["${var.name}-server"]
 
-  # user_data = <<EOF
-  # #cloud-config
-  # packages:
-  #     - nginx
-  #     - postgresql
-  #     - postgresql-contrib
-  # runcmd:
-  #     - wget -P /var/www/html https://raw.githubusercontent.com/do-community/terraform-sample-digitalocean-architectures/master/01-minimal-web-db-stack/assets/index.html
-  #     - sed -i "s/CHANGE_ME/web-${var.region}-${count.index +1}/" /var/www/html/index.html
-  # EOF
+  connection {
+    type = "ssh"
+    user = "root"
+    private_key = file(pathexpand(var.do_ssh_privkey))
+    host = self.ipv4_address
+  }
+
+  provisioner "file" {
+    source = "../trackmania"
+    destination = "/opt" 
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cd /opt/trackmania",
+      "echo \"FORCE_IP_ADDRESS=\\\"${self.ipv4_address}:2350\\\"\" >> /opt/trackmania/trackmania.env",
+      "docker compose up -d"
+    ]
+  }
 
   lifecycle {
     create_before_destroy = true
@@ -94,11 +103,13 @@ resource "digitalocean_firewall" "server" {
   inbound_rule {
     protocol = "tcp"
     port_range = "2350"
+    source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   inbound_rule {
     protocol = "udp"
     port_range = "2350"
+    source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   # ssh

@@ -1,6 +1,7 @@
 # required
 variable "do_token" {}
 variable "do_ssh_pubkey" {}
+variable "do_ssh_privkey" {}
 variable "do_ssh_ip" {}
 
 variable "name" {

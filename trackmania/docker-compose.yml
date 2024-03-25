@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  trackmania:
+    image: evotm/trackmania:latest
+    restart: unless-stopped
+    ports:
+      - 2350:2350/udp
+      - 2350:2350/tcp
+    env_file:
+      - trackmania.env
+    volumes:
+      - "tmserverData:/server/UserData/"
+  # pyplanet:
+  #   image: pyplanet/pyplanet:latest
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - dedicated
+  #   environment:
+  #     GAME_SETTINGS: "maplist.txt"
+  #     PYPLANET_DEBUG: "False"
+  #   volumes:
+  #     - "pyplanetData:/app/server"
+  #     - "./Maps:/server/UserData/Maps"
+
+volumes:
+  tmserverData:
+  # pyplanetData: null
