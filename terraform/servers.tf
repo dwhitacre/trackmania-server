@@ -23,7 +23,12 @@ resource "digitalocean_droplet" "server" {
   provisioner "remote-exec" {
     inline = [
       "cd /opt/trackmania",
+      "chmod +x init-db.sh",
       "echo \"FORCE_IP_ADDRESS=\\\"${self.ipv4_address}:2350\\\"\" >> /opt/trackmania/trackmania.env",
+      "echo \"MYSQL_USER=\\\"${digitalocean_database_cluster.mysql-cluster.user}\\\"\" >> /opt/trackmania/trackmania.env",
+      "echo \"MYSQL_PASSWORD=\\\"${digitalocean_database_cluster.mysql-cluster.password}\\\"\" >> /opt/trackmania/trackmania.env",
+      "echo \"MYSQL_HOST=\\\"${digitalocean_database_cluster.mysql-cluster.private_host}\\\"\" >> /opt/trackmania/trackmania.env",
+      "echo \"MYSQL_PORT=\\\"${digitalocean_database_cluster.mysql-cluster.port}\\\"\" >> /opt/trackmania/trackmania.env",
       "docker compose up -d"
     ]
   }

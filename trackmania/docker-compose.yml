@@ -11,6 +11,13 @@ services:
       - trackmania.env
     volumes:
       - "tmserverData:/server/UserData/"
+  init-db:
+    image: mysql:8.0
+    command: /init-db.sh
+    env_file:
+      - trackmania.env
+    volumes:
+      - ./init-db.sh:/init-db.sh
   # pyplanet:
   #   image: pyplanet/pyplanet:latest
   #   restart: unless-stopped
