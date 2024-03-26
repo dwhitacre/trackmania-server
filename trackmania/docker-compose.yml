@@ -11,27 +11,49 @@ services:
       - "FORCE_IP_ADDRESS=${IPV4_ADDRESS}:2350"
       - "MASTER_LOGIN=${TM_MASTER_LOGIN}"
       - "MASTER_PASSWORD=${TM_MASTER_PASSWORD}"
+      - XMLRPC_ALLOWREMOTE="True"
+      - CONNECTION_UPLOADRATE="102400"
+      - CONNECTION_DOWNLOADRATE="102400"
+      - WORKERTHREADCOUNT="2"
+      - PLAYERS_MAX=50
+      - SPECTATORS_MAX=10
+      - "SERVER_NAME=${TM_SERVER_NAME}"
     volumes:
       - "tmserverData:/server/UserData/"
+    networks:
+      - server-network
   init-db:
     image: mysql:8.0
     command: /init-db.sh
+    restart: on-failure
     env_file:
       - .env
     volumes:
       - ./init-db.sh:/init-db.sh
-  # pyplanet:
-  #   image: pyplanet/pyplanet:latest
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - trackmania
-  #     - init-db
-  #   env_file:
-  #     - trackmania.env
-  #   volumes:
-  #     - "pyplanetData:/app/server"
-  #     - "tmserverData:/server/UserData/"
+  pyplanet:
+    image: pyplanet/pyplanet:latest
+    restart: unless-stopped
+    depends_on:
+      - trackmania
+      - init-db
+    env_file:
+      - .env
+    volumes:
+      - "pyplanetData:/app/server"
+      - "tmserverData:/server/UserData/"
+      - type: bind
+        source: ${PWD}/apps.py
+        target: /app/server/settings/apps.py
+      - type: bind
+        source: ${PWD}/base.py
+        target: /app/server/settings/base.py
+    networks:
+      - server-network
 
+networks:
+  server-network:
+    driver: bridge
 volumes:
   tmserverData:
-  # pyplanetData:
+  pyplanetData:
+    driver: local

@@ -34,6 +34,7 @@ resource "digitalocean_droplet" "server" {
       "echo \"MYSQL_DATABASE=\\\"pyplanet\\\"\" >> .env",
       "echo \"TM_MASTER_LOGIN=\\\"${var.tm_master_login}\\\"\" >> .env",
       "echo \"TM_MASTER_PASSWORD=\\\"${var.tm_master_password}\\\"\" >> .env",
+      "echo \"TM_SERVER_NAME=\\\"${var.tm_server_name}\\\"\" >> .env",
       "docker compose up -d"
     ]
   }

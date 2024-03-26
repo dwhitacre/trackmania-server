@@ -11,6 +11,11 @@ variable "name" {
   default = "trackmania"
 }
 
+variable "tm_server_name" {
+  type = string
+  default = "Example Server"
+}
+
 variable "region" {
   type    = string
   default = "nyc3"
