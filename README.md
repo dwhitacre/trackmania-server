@@ -1,7 +1,7 @@
 ## Trackmania Server IaC
 
-IaC for setting up a Trackmania dedicated server with PyPlanet on Digital Ocean. This
-server will create the following infrastructure:
+IaC for setting up a Trackmania dedicated server with PyPlanet on Digital Ocean.
+Running the scripts in this repository will create the following infrastructure:
 - Ubuntu 20 w/ Docker droplet
   - Trackmania dedicated server
   - Pyplanet
