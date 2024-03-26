@@ -7,29 +7,31 @@ services:
     ports:
       - 2350:2350/udp
       - 2350:2350/tcp
-    env_file:
-      - trackmania.env
+    environment:
+      - "FORCE_IP_ADDRESS=${IPV4_ADDRESS}:2350"
+      - "MASTER_LOGIN=${TM_MASTER_LOGIN}"
+      - "MASTER_PASSWORD=${TM_MASTER_PASSWORD}"
     volumes:
       - "tmserverData:/server/UserData/"
   init-db:
     image: mysql:8.0
     command: /init-db.sh
     env_file:
-      - trackmania.env
+      - .env
     volumes:
       - ./init-db.sh:/init-db.sh
   # pyplanet:
   #   image: pyplanet/pyplanet:latest
   #   restart: unless-stopped
   #   depends_on:
-  #     - dedicated
-  #   environment:
-  #     GAME_SETTINGS: "maplist.txt"
-  #     PYPLANET_DEBUG: "False"
+  #     - trackmania
+  #     - init-db
+  #   env_file:
+  #     - trackmania.env
   #   volumes:
   #     - "pyplanetData:/app/server"
-  #     - "./Maps:/server/UserData/Maps"
+  #     - "tmserverData:/server/UserData/"
 
 volumes:
   tmserverData:
-  # pyplanetData: null
+  # pyplanetData:

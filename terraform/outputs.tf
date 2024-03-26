@@ -27,3 +27,7 @@ output "database_password" {
   value = digitalocean_database_cluster.mysql-cluster.password
   sensitive = true
 }
+
+output "do_ssh_privkey_path" {
+  value = pathexpand(var.do_ssh_privkey)
+}

@@ -3,6 +3,8 @@ variable "do_token" {}
 variable "do_ssh_pubkey" {}
 variable "do_ssh_privkey" {}
 variable "do_ssh_ip" {}
+variable "tm_master_login" {}
+variable "tm_master_password" {}
 
 variable "name" {
   type = string

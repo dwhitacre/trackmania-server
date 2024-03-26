@@ -24,11 +24,16 @@ resource "digitalocean_droplet" "server" {
     inline = [
       "cd /opt/trackmania",
       "chmod +x init-db.sh",
-      "echo \"FORCE_IP_ADDRESS=\\\"${self.ipv4_address}:2350\\\"\" >> /opt/trackmania/trackmania.env",
-      "echo \"MYSQL_USER=\\\"${digitalocean_database_cluster.mysql-cluster.user}\\\"\" >> /opt/trackmania/trackmania.env",
-      "echo \"MYSQL_PASSWORD=\\\"${digitalocean_database_cluster.mysql-cluster.password}\\\"\" >> /opt/trackmania/trackmania.env",
-      "echo \"MYSQL_HOST=\\\"${digitalocean_database_cluster.mysql-cluster.private_host}\\\"\" >> /opt/trackmania/trackmania.env",
-      "echo \"MYSQL_PORT=\\\"${digitalocean_database_cluster.mysql-cluster.port}\\\"\" >> /opt/trackmania/trackmania.env",
+      "touch .env",
+      "echo \"IPV4_ADDRESS=\\\"${self.ipv4_address}\\\"\" >> .env",
+      "echo \"IPV4_PORT=\\\"2350\\\"\" >> .env",
+      "echo \"MYSQL_USER=\\\"${digitalocean_database_cluster.mysql-cluster.user}\\\"\" >> .env",
+      "echo \"MYSQL_PASSWORD=\\\"${digitalocean_database_cluster.mysql-cluster.password}\\\"\" >> .env",
+      "echo \"MYSQL_HOST=\\\"${digitalocean_database_cluster.mysql-cluster.private_host}\\\"\" >> .env",
+      "echo \"MYSQL_PORT=\\\"${digitalocean_database_cluster.mysql-cluster.port}\\\"\" >> .env",
+      "echo \"MYSQL_DATABASE=\\\"pyplanet\\\"\" >> .env",
+      "echo \"TM_MASTER_LOGIN=\\\"${var.tm_master_login}\\\"\" >> .env",
+      "echo \"TM_MASTER_PASSWORD=\\\"${var.tm_master_password}\\\"\" >> .env",
       "docker compose up -d"
     ]
   }

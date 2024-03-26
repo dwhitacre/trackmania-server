@@ -1,2 +1,1 @@
-trackmania*.env
-!.env.example
+*.env
