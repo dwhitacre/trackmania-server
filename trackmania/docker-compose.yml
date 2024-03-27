@@ -11,6 +11,7 @@ services:
       - "FORCE_IP_ADDRESS=${IPV4_ADDRESS}:2350"
       - "MASTER_LOGIN=${TM_MASTER_LOGIN}"
       - "MASTER_PASSWORD=${TM_MASTER_PASSWORD}"
+      - GAME_SETTINGS=maplist.txt
       - XMLRPC_ALLOWREMOTE="True"
       - CONNECTION_UPLOADRATE="102400"
       - CONNECTION_DOWNLOADRATE="102400"
@@ -19,6 +20,7 @@ services:
       - SPECTATORS_MAX=10
       - "SERVER_NAME=${TM_SERVER_NAME}"
     volumes:
+      - "./Maps:/server/UserData/Maps"
       - "tmserverData:/server/UserData/"
     networks:
       - server-network
@@ -40,13 +42,13 @@ services:
       - .env
     volumes:
       - "pyplanetData:/app/server"
-      - "tmserverData:/server/UserData/"
       - type: bind
         source: ${PWD}/apps.py
         target: /app/server/settings/apps.py
       - type: bind
         source: ${PWD}/base.py
         target: /app/server/settings/base.py
+      - "./Maps:/app/server/UserData/Maps"
     networks:
       - server-network
 

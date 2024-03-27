@@ -82,7 +82,7 @@ STORAGE = {
     'default': {
         'DRIVER': 'pyplanet.core.storage.drivers.local.LocalDriver',
         'OPTIONS': {
-            'BASE_PATH': '/pyplanet/server'
+            'BASE_PATH': '/app/server'
         },
     }
 }

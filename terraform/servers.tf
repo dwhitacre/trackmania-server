@@ -23,6 +23,8 @@ resource "digitalocean_droplet" "server" {
   provisioner "remote-exec" {
     inline = [
       "cd /opt/trackmania",
+      "chown -R 9999:9999 ./Maps",
+      "chmod -R 777 ./Maps",
       "chmod +x init-db.sh",
       "touch .env",
       "echo \"IPV4_ADDRESS=\\\"${self.ipv4_address}\\\"\" >> .env",
