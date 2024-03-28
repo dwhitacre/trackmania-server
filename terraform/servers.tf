@@ -37,6 +37,7 @@ resource "digitalocean_droplet" "server" {
       "echo \"TM_MASTER_LOGIN=\\\"${var.tm_master_login}\\\"\" >> .env",
       "echo \"TM_MASTER_PASSWORD=\\\"${var.tm_master_password}\\\"\" >> .env",
       "echo \"TM_SERVER_NAME=\\\"${var.tm_server_name}\\\"\" >> .env",
+      "echo \"TM_SERVER_OWNER=\\\"${var.tm_server_owner}\\\"\" >> .env",
       "docker compose up -d"
     ]
   }

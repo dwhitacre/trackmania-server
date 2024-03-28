@@ -16,6 +16,11 @@ variable "tm_server_name" {
   default = "Example Server"
 }
 
+variable "tm_server_owner" {
+  type = string
+  default = "xxx"
+}
+
 variable "region" {
   type    = string
   default = "nyc3"
